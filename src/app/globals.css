@@ -11,9 +11,7 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  --color-primary-50: oklch(
-    0.98 0.03 260
-  ); /* Soft Indigo (inspired by Tailwind Indigo) */
+  --color-primary-50: oklch(0.98 0.03 260);
   --color-primary-100: oklch(0.96 0.06 260);
   --color-primary-200: oklch(0.91 0.13 260);
   --color-primary-300: oklch(0.83 0.21 260);
@@ -25,7 +23,6 @@
   --color-primary-900: oklch(0.28 0.11 260);
   --color-primary-950: oklch(0.2 0.08 260);
 
-  /* Modern Green (inspired by Tailwind Emerald) */
   --color-secondary-50: oklch(0.98 0.03 145);
   --color-secondary-100: oklch(0.96 0.06 145);
   --color-secondary-200: oklch(0.91 0.13 145);
@@ -50,4 +47,66 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.type {
+  @apply rounded px-2 py-1 text-sm text-white;
+}
+
+.type-normal {
+  background-color: #a8a77a;
+}
+.type-fire {
+  background-color: #ee8130;
+}
+.type-water {
+  background-color: #6390f0;
+}
+.type-electric {
+  background-color: #f7d02c;
+}
+.type-grass {
+  background-color: #7ac74c;
+}
+.type-ice {
+  background-color: #96d9d6;
+}
+.type-fighting {
+  background-color: #c22e28;
+}
+.type-poison {
+  background-color: #a33ea1;
+}
+.type-ground {
+  background-color: #e2bf65;
+}
+.type-flying {
+  background-color: #a98ff3;
+}
+.type-psychic {
+  background-color: #f95587;
+}
+.type-bug {
+  background-color: #a6b91a;
+}
+.type-rock {
+  background-color: #b6a136;
+}
+.type-ghost {
+  background-color: #735797;
+}
+.type-dragon {
+  background-color: #6f35fc;
+}
+.type-dark {
+  background-color: #705746;
+}
+.type-steel {
+  background-color: #b7b7ce;
+}
+.type-fairy {
+  background-color: #d685ad;
+}
+.type-default {
+  background-color: #d1d5db;
 }
