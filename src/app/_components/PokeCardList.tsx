@@ -14,23 +14,35 @@ export default function PokeCardList({
   className = "",
   loading = false,
 }: PokeCardListProps) {
+  if (!loading && pokemons.length === 0) {
+    return (
+      <div className="flex h-full w-full items-center justify-center py-8">
+        <div className="text-center">
+          <div className="text-2xl font-bold">Pokémon Not Found</div>
+          <div className="mt-2 text-sm text-gray-500">
+            Please try again later or check your network connection.
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
       className={`grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ${className}`}
     >
       {loading
         ? Array.from({ length: 10 }).map((_, idx) => (
-            <div
-              key={idx}
-              className="flex animate-pulse flex-col gap-4 rounded-lg border border-gray-100 bg-white p-4 shadow"
-            >
-              <div className="h-32 w-full rounded bg-gray-200" />
-              <div className="space-y-[6px] text-center">
-                <div className="mx-auto h-5 w-12 rounded bg-gray-200" />
-                <div className="mx-auto h-7 w-32 rounded bg-gray-300" />
-                <div className="flex flex-wrap justify-center gap-1">
-                  <span className="h-7 w-16 rounded bg-gray-200" />
-                  <span className="h-7 w-16 rounded bg-gray-200" />
+            <div key={idx}>
+              <div className="flex animate-pulse flex-col gap-4 rounded-lg border border-gray-100 bg-white p-4 shadow">
+                <div className="h-32 w-full rounded bg-gray-100" />
+                <div className="space-y-[6px] text-center">
+                  <div className="mx-auto h-5 w-12 rounded bg-gray-100" />
+                  <div className="mx-auto h-7 w-32 rounded bg-gray-200" />
+                  <div className="flex flex-wrap justify-center gap-1">
+                    <span className="h-7 w-16 rounded bg-gray-100" />
+                    <span className="h-7 w-16 rounded bg-gray-100" />
+                  </div>
                 </div>
               </div>
             </div>
