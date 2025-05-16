@@ -11,17 +11,32 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  --color-primary-50: oklch(0.98 0.04 29);
-  --color-primary-100: oklch(0.96 0.07 29);
-  --color-primary-200: oklch(0.92 0.13 29);
-  --color-primary-300: oklch(0.86 0.19 29);
-  --color-primary-400: oklch(0.78 0.23 29);
-  --color-primary-500: oklch(0.72 0.25 29);
-  --color-primary-600: oklch(0.62 0.22 29);
-  --color-primary-700: oklch(0.52 0.18 29);
-  --color-primary-800: oklch(0.42 0.14 29);
-  --color-primary-900: oklch(0.32 0.10 29);
-  --color-primary-950: oklch(0.22 0.07 29);
+  --color-primary-50: oklch(
+    0.98 0.03 260
+  ); /* Soft Indigo (inspired by Tailwind Indigo) */
+  --color-primary-100: oklch(0.96 0.06 260);
+  --color-primary-200: oklch(0.91 0.13 260);
+  --color-primary-300: oklch(0.83 0.21 260);
+  --color-primary-400: oklch(0.74 0.27 260);
+  --color-primary-500: oklch(0.65 0.29 260);
+  --color-primary-600: oklch(0.56 0.25 260);
+  --color-primary-700: oklch(0.46 0.2 260);
+  --color-primary-800: oklch(0.36 0.15 260);
+  --color-primary-900: oklch(0.28 0.11 260);
+  --color-primary-950: oklch(0.2 0.08 260);
+
+  /* Modern Green (inspired by Tailwind Emerald) */
+  --color-secondary-50: oklch(0.98 0.03 145);
+  --color-secondary-100: oklch(0.96 0.06 145);
+  --color-secondary-200: oklch(0.91 0.13 145);
+  --color-secondary-300: oklch(0.83 0.21 145);
+  --color-secondary-400: oklch(0.74 0.27 145);
+  --color-secondary-500: oklch(0.65 0.29 145);
+  --color-secondary-600: oklch(0.56 0.25 145);
+  --color-secondary-700: oklch(0.46 0.2 145);
+  --color-secondary-800: oklch(0.36 0.15 145);
+  --color-secondary-900: oklch(0.28 0.11 145);
+  --color-secondary-950: oklch(0.2 0.08 145);
 }
 
 @media (prefers-color-scheme: dark) {
