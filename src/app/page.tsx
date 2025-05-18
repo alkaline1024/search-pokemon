@@ -45,32 +45,63 @@ export default function Home() {
 
   // Initial fetch
   useEffect(() => {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    }, 50);
     fetchPokemons(INIT_FIRST);
   }, []);
 
-  // Infinite scroll
+  // Fetch more pokemons when
+  // 1. Scroll to bottom
+  // 2. Content not filled the container
   useEffect(() => {
     if (!hasMore || loading) {
       return;
     }
-    function handleScroll() {
+
+    function isFetchTrigger() {
       const container = containerRef.current;
       if (!container) {
-        return;
+        return false;
       }
+
       const scrollTop = window.scrollY || window.pageYOffset;
       const windowHeight = window.innerHeight;
       const containerHeight = container.scrollHeight;
-      if (scrollTop + windowHeight >= containerHeight) {
+
+      // 1. Scroll to bottom
+      if (scrollTop + windowHeight >= containerHeight - 200) {
+        return true;
+      }
+      // 2. Content not filled the container
+      if (containerHeight <= windowHeight) {
+        return true;
+      }
+
+      return false;
+    }
+
+    if (isFetchTrigger()) {
+      fetchPokemons(fetchedCount.current + OFFSET);
+    }
+
+    function handleScroll() {
+      if (isFetchTrigger()) {
         fetchPokemons(fetchedCount.current + OFFSET);
       }
     }
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [hasMore, loading]);
+  }, [pokemons, hasMore, loading]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className="space-y-4 p-4" style={{ overflowAnchor: "none" }}>
+    <div
+      className="flex flex-col p-4"
+      style={{
+        overflowAnchor: "none",
+        gap: pokemons.length > 0 ? "1rem" : "0",
+      }}
+    >
       <div ref={containerRef}>
         <PokeCardList
           pokemons={pokemons}
