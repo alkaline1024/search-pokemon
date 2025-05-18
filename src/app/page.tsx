@@ -7,8 +7,10 @@ import PokeCardList from "./_components/PokeCardList";
 
 export default function Home() {
   const [pokemons, setPokemons] = useState<IPokemon[]>([]);
+  const [filteredPokemons, setFilteredPokemons] = useState<IPokemon[]>([]);
   const [loading, setLoading] = useState(true);
   const [hasMore, setHasMore] = useState(true);
+  const [searching, setSearching] = useState(false);
   const [searchText, setSearchText] = useState("");
   const hasSearchText = searchText.length > 0;
 
@@ -29,10 +31,11 @@ export default function Home() {
     });
     const subscription = observer.subscribe({
       next: ({ data }) => {
-        const newPokemons = data.pokemons ?? [];
-        const newPokemonCount = newPokemons.length - pokemons.length;
-        if (newPokemonCount < INIT_FIRST) setHasMore(false);
-        setPokemons(newPokemons);
+        const newPokemons: IPokemon[] = data.pokemons ?? [];
+        if (newPokemons.length < first) {
+          setHasMore(false);
+        }
+        setFilteredPokemons(newPokemons);
         setLoading(false);
         fetchedCount.current = newPokemons.length;
         subscription.unsubscribe();
@@ -45,6 +48,34 @@ export default function Home() {
     });
   };
 
+  // Manual search: fetch ทีละ OFFSET แล้ว filter จนกว่าจะไม่มี hasMore
+  const searchPokemons = async () => {
+    if (!hasSearchText || searchText === "") {
+      return;
+    }
+    setSearching(true);
+    let offset = OFFSET;
+    let fetching = true;
+    while (fetching) {
+      const result = await apolloClient.query({
+        query: GET_POKEMONS,
+        variables: { first: offset },
+        fetchPolicy: "cache-first",
+      });
+      const newPokemons: IPokemon[] = result.data.pokemons ?? [];
+      const filteredPokemons = newPokemons.filter((p) =>
+        p.name.toLowerCase().includes(searchText.toLowerCase()),
+      );
+      setFilteredPokemons(filteredPokemons);
+      if (newPokemons.length < offset) {
+        setPokemons(newPokemons);
+        fetching = false;
+      }
+      offset += OFFSET;
+    }
+    setSearching(false);
+  };
+
   // Initial fetch
   useEffect(() => {
     setTimeout(() => {
@@ -53,11 +84,16 @@ export default function Home() {
     fetchPokemons(INIT_FIRST);
   }, []);
 
+  // Fetch on search
+  useEffect(() => {
+    searchPokemons();
+  }, [searchText]); // eslint-disable-line react-hooks/exhaustive-deps
+
   // Fetch more pokemons when
   // 1. Scroll to bottom
   // 2. Content not filled the container
   useEffect(() => {
-    if (!hasMore || loading) {
+    if (!hasMore || loading || hasSearchText) {
       return;
     }
 
@@ -94,7 +130,7 @@ export default function Home() {
     }
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [pokemons, hasMore, loading]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [filteredPokemons, hasMore, loading]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="space-y-6 py-6">
@@ -119,7 +155,7 @@ export default function Home() {
               className="material-icons cursor-pointer rounded-full p-2 hover:bg-gray-200"
               onClick={() => {
                 setSearchText("");
-                fetchPokemons(INIT_FIRST);
+                setFilteredPokemons(pokemons);
               }}
             >
               close
@@ -127,9 +163,7 @@ export default function Home() {
             <span className="my-2 h-auto w-[1px] bg-gray-200" />
             <span
               className="material-icons cursor-pointer rounded-full p-2 hover:bg-gray-200"
-              onClick={() => {
-                fetchPokemons(INIT_FIRST);
-              }}
+              onClick={() => {}}
             >
               search
             </span>
@@ -140,16 +174,17 @@ export default function Home() {
         className="flex flex-col"
         style={{
           overflowAnchor: "none",
-          gap: pokemons.length > 0 ? "1rem" : "0",
+          gap: filteredPokemons.length > 0 ? "1rem" : "0",
         }}
       >
         <div ref={containerRef}>
           <PokeCardList
-            pokemons={pokemons}
-            loading={loading && pokemons.length === 0}
+            pokemons={filteredPokemons}
+            loading={loading && filteredPokemons.length === 0}
+            searching={searching}
           />
         </div>
-        {hasMore && (
+        {!hasSearchText && hasMore && (
           <div>
             <PokeCardList pokemons={[]} loading={true} loadingAmount={OFFSET} />
           </div>
