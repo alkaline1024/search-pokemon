@@ -95,24 +95,26 @@ export default function Home() {
   }, [pokemons, hasMore, loading]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div
-      className="flex flex-col p-4"
-      style={{
-        overflowAnchor: "none",
-        gap: pokemons.length > 0 ? "1rem" : "0",
-      }}
-    >
-      <div ref={containerRef}>
-        <PokeCardList
-          pokemons={pokemons}
-          loading={loading && pokemons.length === 0}
-        />
-      </div>
-      {hasMore && (
-        <div>
-          <PokeCardList pokemons={[]} loading={true} loadingAmount={OFFSET} />
+    <div>
+      <div
+        className="flex flex-col p-4"
+        style={{
+          overflowAnchor: "none",
+          gap: pokemons.length > 0 ? "1rem" : "0",
+        }}
+      >
+        <div ref={containerRef}>
+          <PokeCardList
+            pokemons={pokemons}
+            loading={loading && pokemons.length === 0}
+          />
         </div>
-      )}
+        {hasMore && (
+          <div>
+            <PokeCardList pokemons={[]} loading={true} loadingAmount={OFFSET} />
+          </div>
+        )}
+      </div>
     </div>
   );
 }
