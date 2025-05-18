@@ -54,7 +54,7 @@ export default function PokeCardList({
               <div key={pokemon.id}>
                 <div
                   id={pokemon.id}
-                  className="flex flex-col gap-4 rounded-lg border border-gray-100 bg-white p-4 shadow"
+                  className="flex flex-col gap-4 segment"
                 >
                   <Image
                     id={`${pokemon.id}-image`}

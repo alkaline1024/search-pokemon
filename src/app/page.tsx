@@ -95,9 +95,9 @@ export default function Home() {
   }, [pokemons, hasMore, loading]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div>
+    <div className="space-y-6 py-6">
       <div
-        className="flex flex-col p-4"
+        className="flex flex-col"
         style={{
           overflowAnchor: "none",
           gap: pokemons.length > 0 ? "1rem" : "0",
