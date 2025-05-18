@@ -7,12 +7,14 @@ interface PokeCardListProps {
   pokemons: IPokemon[];
   className?: HTMLAttributes<HTMLDivElement>["className"];
   loading?: boolean;
+  loadingAmount?: number;
 }
 
 export default function PokeCardList({
   pokemons,
   className = "",
   loading = false,
+  loadingAmount = 0,
 }: PokeCardListProps) {
   if (!loading && pokemons.length === 0) {
     return (
@@ -32,7 +34,7 @@ export default function PokeCardList({
       className={`grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ${className}`}
     >
       {loading
-        ? Array.from({ length: 10 }).map((_, idx) => (
+        ? Array.from({ length: loadingAmount }).map((_, idx) => (
             <div key={idx}>
               <div className="flex animate-pulse flex-col gap-4 rounded-lg border border-gray-100 bg-white p-4 shadow">
                 <div className="h-32 w-full rounded bg-gray-100" />
@@ -63,7 +65,7 @@ export default function PokeCardList({
                     height={128}
                     loading="lazy"
                     priority={false}
-                    className="h-32 w-full object-contain object-center"
+                    className="mx-auto h-32 object-contain object-center"
                   />
                   <div className="text-center">
                     <div className="text-sm opacity-60">#{pokemon.number}</div>
