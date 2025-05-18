@@ -40,10 +40,10 @@ export default function PokeCardList({
                 <div className="h-32 w-full rounded bg-gray-100" />
                 <div className="space-y-[6px] text-center">
                   <div className="mx-auto h-5 w-12 rounded bg-gray-100" />
-                  <div className="mx-auto h-7 w-32 rounded bg-gray-200" />
+                  <div className="mx-auto h-6 w-32 rounded bg-gray-200" />
                   <div className="flex flex-wrap justify-center gap-1">
-                    <span className="h-7 w-16 rounded bg-gray-100" />
-                    <span className="h-7 w-16 rounded bg-gray-100" />
+                    <span className="h-6 w-16 rounded bg-gray-100" />
+                    <span className="h-6 w-16 rounded bg-gray-100" />
                   </div>
                 </div>
               </div>
