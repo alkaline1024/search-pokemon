@@ -36,6 +36,29 @@
   --color-secondary-950: oklch(0.2 0.08 136);
 }
 
+/* material-icons-regular - latin */
+@font-face {
+  font-display: swap;
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/material-icons-v143-latin-regular.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+.material-icons {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  direction: ltr;
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
