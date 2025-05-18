@@ -23,7 +23,7 @@ export default function Home() {
     const observer = apolloClient.watchQuery({
       query: GET_POKEMONS,
       variables: { first },
-      fetchPolicy: "no-cache",
+      fetchPolicy: "cache-first",
     });
     const subscription = observer.subscribe({
       next: ({ data }) => {
