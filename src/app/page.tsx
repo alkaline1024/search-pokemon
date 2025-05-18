@@ -23,6 +23,11 @@ export default function Home() {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const fetchPokemons = (first: number) => {
+    if (!hasMore) {
+      setFilteredPokemons(pokemons);
+      return true;
+    }
+
     setLoading(true);
     const observer = apolloClient.watchQuery({
       query: GET_POKEMONS,
@@ -33,6 +38,7 @@ export default function Home() {
       next: ({ data }) => {
         const newPokemons: IPokemon[] = data.pokemons ?? [];
         if (newPokemons.length < first) {
+          setPokemons(newPokemons);
           setHasMore(false);
         }
         setFilteredPokemons(newPokemons);
@@ -51,8 +57,18 @@ export default function Home() {
   // Manual search: fetch ทีละ OFFSET แล้ว filter จนกว่าจะไม่มี hasMore
   const searchPokemons = async () => {
     if (!hasSearchText || searchText === "") {
-      return;
+      return false;
     }
+
+    // No need to fetch if all pokemons have already been fetched
+    if (!hasMore) {
+      const filtered = pokemons.filter((p) =>
+        p.name.toLowerCase().includes(searchText.toLowerCase()),
+      );
+      setFilteredPokemons(filtered);
+      return true;
+    }
+
     setSearching(true);
     let offset = OFFSET;
     let fetching = true;
@@ -69,6 +85,7 @@ export default function Home() {
       setFilteredPokemons(filteredPokemons);
       if (newPokemons.length < offset) {
         setPokemons(newPokemons);
+        setHasMore(false);
         fetching = false;
       }
       offset += OFFSET;
@@ -146,7 +163,15 @@ export default function Home() {
             className={`${hasSearchText ? "pr-24" : "pl-12"} w-full rounded-full bg-white px-6 py-4 !outline-0 duration-300`}
             placeholder="Search Pokémon..."
             value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
+            onChange={(e) => {
+              const searchInput = e.target.value;
+              if (!searchInput) {
+                setSearchText("");
+                fetchPokemons(INIT_FIRST);
+              } else {
+                setSearchText(searchInput);
+              }
+            }}
           />
           <div
             className={`${hasSearchText ? "scale-100 opacity-100" : "scale-0 opacity-0"} absolute top-1/2 right-4 flex origin-right -translate-y-1/2 gap-1 transition-all`}
@@ -155,7 +180,7 @@ export default function Home() {
               className="material-icons cursor-pointer rounded-full p-2 hover:bg-gray-200"
               onClick={() => {
                 setSearchText("");
-                setFilteredPokemons(pokemons);
+                fetchPokemons(INIT_FIRST);
               }}
             >
               close
