@@ -154,7 +154,7 @@ export default function Home() {
       <div className="group w-1/2 rounded-full shadow-sm transition-shadow focus-within:!shadow-lg">
         <div className="relative">
           <span
-            className={`${hasSearchText ? "scale-0 !opacity-0" : "scale-100"} material-icons absolute top-1/2 left-4 origin-left -translate-y-1/2 opacity-60 transition-all duration-300 group-focus-within:text-gray-800 group-focus-within:opacity-100`}
+            className={`${hasSearchText ? "scale-0 !opacity-0" : "scale-100"} material-symbols-outlined absolute top-1/2 left-4 origin-left -translate-y-1/2 opacity-60 transition-all duration-300 group-focus-within:text-gray-800 group-focus-within:opacity-100`}
           >
             search
           </span>
@@ -177,7 +177,7 @@ export default function Home() {
             className={`${hasSearchText ? "scale-100 opacity-100" : "scale-0 opacity-0"} absolute top-1/2 right-4 flex origin-right -translate-y-1/2 gap-1 transition-all`}
           >
             <span
-              className="material-icons cursor-pointer rounded-full p-2 hover:bg-gray-200"
+              className="material-symbols-outlined cursor-pointer rounded-full p-2 hover:bg-gray-200"
               onClick={() => {
                 setSearchText("");
                 fetchPokemons(INIT_FIRST);
@@ -186,12 +186,18 @@ export default function Home() {
               close
             </span>
             <span className="my-2 h-auto w-[1px] bg-gray-200" />
-            <span
-              className="material-icons cursor-pointer rounded-full p-2 hover:bg-gray-200"
-              onClick={() => {}}
-            >
-              search
-            </span>
+            {!searching ? (
+              <span
+                className="material-symbols-outlined cursor-pointer rounded-full p-2 hover:bg-gray-200"
+                onClick={() => {}}
+              >
+                search
+              </span>
+            ) : (
+              <span className="material-symbols-outlined rotate-180 animate-spin rounded-full p-2">
+                autorenew
+              </span>
+            )}
           </div>
         </div>
       </div>
