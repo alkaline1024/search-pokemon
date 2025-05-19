@@ -76,8 +76,15 @@ export default function Home() {
     });
   };
 
-  // Manual search: fetch by OFFSET and filter until all pokemons are fetched
+  // Manual search: fetch by OFFSET and filter until all pokemons have been fetched
+  const searchAbortController = useRef<AbortController | null>(null);
   const searchPokemons = async () => {
+    if (searchAbortController.current) {
+      searchAbortController.current.abort();
+    }
+    const abortController = new AbortController();
+    searchAbortController.current = abortController;
+
     if (!hasSearchText && !filterType) {
       fetchPokemons(INIT_FIRST);
       return false;
@@ -96,7 +103,6 @@ export default function Home() {
       setFilteredPokemons(filtered);
     };
 
-    // No need to fetch if all pokemons have already been fetched
     if (!hasMore) {
       findAndSetFilteredPokemons(pokemons);
       return true;
@@ -106,6 +112,10 @@ export default function Home() {
     let offset = OFFSET;
     let fetching = true;
     while (fetching) {
+      if (abortController.signal.aborted) {
+        fetching = false;
+        break;
+      }
       const result = await apolloClient.query({
         query: GET_POKEMONS,
         variables: { first: offset },
@@ -119,6 +129,7 @@ export default function Home() {
         setPokemons(newPokemons);
         setHasMore(false);
         fetching = false;
+        break;
       }
       offset += OFFSET;
     }
