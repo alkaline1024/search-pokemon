@@ -5,6 +5,7 @@ import { GET_POKEMONS } from "@/graphql/pokemonQueries";
 import apolloClient from "@/lib/apolloClient";
 import { PokeCardList } from "@/app/_components/Pokemons";
 import { useTranslations } from "next-intl";
+import { useSearchParams, useRouter } from "next/navigation";
 
 const pokemonTypes = [
   "Normal",
@@ -29,6 +30,9 @@ const pokemonTypes = [
 
 export default function PokemonListPage() {
   const t = useTranslations();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const [pokemons, setPokemons] = useState<IPokemon[]>([]);
   const [filteredPokemons, setFilteredPokemons] = useState<IPokemon[]>([]);
 
@@ -140,18 +144,29 @@ export default function PokemonListPage() {
     setSearching(false);
   };
 
+  // Fetch on search
+  useEffect(() => {
+    searchPokemons();
+  }, [searchText, filterType]); // eslint-disable-line react-hooks/exhaustive-deps
+
   // Initial fetch
   useEffect(() => {
     setTimeout(() => {
       window.scrollTo({ top: 0, left: 0, behavior: "instant" });
     }, 50);
-    fetchPokemons(INIT_FIRST);
-  }, []);
 
-  // Fetch on search
-  useEffect(() => {
-    searchPokemons();
-  }, [searchText, filterType]); // eslint-disable-line react-hooks/exhaustive-deps
+    const searchTextParam = searchParams.get("search");
+    const filterTypeParam = searchParams.get("type");
+    if (searchTextParam) {
+      setSearchText(searchTextParam);
+    }
+    if (filterTypeParam) {
+      setFilterType(filterTypeParam);
+    }
+    if (!searchTextParam && !filterTypeParam) {
+      fetchPokemons(INIT_FIRST);
+    }
+  }, []);
 
   // Fetch more pokemons when
   // 1. Scroll to bottom

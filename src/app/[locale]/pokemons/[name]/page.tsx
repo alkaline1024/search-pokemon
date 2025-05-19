@@ -2,11 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { useParams } from "next/navigation";
-import { GET_POKEMON_BY_NAME } from "@/graphql/pokemonQueries";
-import apolloClient from "@/lib/apolloClient";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
+import apolloClient from "@/lib/apolloClient";
+import { GET_POKEMON_BY_NAME } from "@/graphql/pokemonQueries";
+import { PokeTypeLabel } from "@/app/_components/Pokemons";
 
 const AttackTable = ({
   attacks,
@@ -26,7 +27,7 @@ const AttackTable = ({
               count: attacks.length,
             })}
           </td>
-          <td className="min-w-24">{t("AttackTable.type")}</td>
+          <td>{t("AttackTable.type")}</td>
           <td>{t("AttackTable.damage")}</td>
         </tr>
       </thead>
@@ -35,10 +36,8 @@ const AttackTable = ({
           <tr key={attack.name}>
             <td>{attack.name}</td>
             <td>
-              <div
-                className={`type mx-1 mt-1 w-fit type-${attack.type.toLowerCase()}`}
-              >
-                {t(attack.type.toLowerCase())}
+              <div className="mx-1 my-1">
+                <PokeTypeLabel className="w-fit" type={attack.type} />
               </div>
             </td>
             <td>{attack.damage}</td>
@@ -131,12 +130,7 @@ export default function PokemonDetailPage() {
               </div>
               <div className="flex flex-wrap gap-2">
                 {pokemon.types.map((type) => (
-                  <span
-                    key={type}
-                    className={`type grow text-center type-${type.toLowerCase()}`}
-                  >
-                    {t(type.toLowerCase())}
-                  </span>
+                  <PokeTypeLabel key={type} type={type} className="grow" />
                 ))}
               </div>
               <div className="mt-2 border-t border-gray-200 pt-2 pb-2 text-start font-semibold">
@@ -144,12 +138,7 @@ export default function PokemonDetailPage() {
               </div>
               <div className="mb-2 flex flex-wrap gap-1">
                 {pokemon.resistant.map((type) => (
-                  <span
-                    key={type}
-                    className={`type type-${type.toLowerCase()}`}
-                  >
-                    {t(type.toLowerCase())}
-                  </span>
+                  <PokeTypeLabel key={type} type={type} />
                 ))}
               </div>
               <div className="mt-2 border-t border-gray-200 pt-2 pb-2 text-start font-semibold">
@@ -157,12 +146,7 @@ export default function PokemonDetailPage() {
               </div>
               <div className="mb-2 flex flex-wrap gap-1">
                 {pokemon.weaknesses.map((type) => (
-                  <span
-                    key={type}
-                    className={`type type-${type.toLowerCase()}`}
-                  >
-                    {t(type.toLowerCase())}
-                  </span>
+                  <PokeTypeLabel key={type} type={type} />
                 ))}
               </div>
             </div>

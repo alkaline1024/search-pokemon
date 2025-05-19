@@ -1,9 +1,10 @@
 "use client";
 
-import { HTMLAttributes } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { HTMLAttributes } from "react";
 import { useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
 
 interface PokeCardListProps {
   pokemons: IPokemon[];
@@ -122,5 +123,25 @@ export const PokeCardList = ({
           })}
       {searching ? PokeCardSkeleton(0) : null}
     </div>
+  );
+};
+
+export const PokeTypeLabel = ({
+  type,
+  className,
+}: {
+  type: string;
+  className?: HTMLAttributes<HTMLDivElement>["className"];
+}) => {
+  console.log(type);
+  const t = useTranslations();
+  return (
+    <Link href={`/pokemons?type=${type}`}>
+      <div
+        className={`type type-${type.toLowerCase()} cursor-pointer border-2 border-white transition-shadow hover:shadow-xl hover:outline-2 ${className || ""}`}
+      >
+        {t(type.toLowerCase())}
+      </div>
+    </Link>
   );
 };
