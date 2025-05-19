@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { GET_POKEMONS } from "@/graphql/pokemonQueries";
 import apolloClient from "@/lib/apolloClient";
-import { PokeCardList } from "@/app/_components/Pokemon";
+import { PokeCardList } from "@/app/_components/Pokemons";
 
 const pokemonTypes = [
   "Normal",
@@ -26,7 +26,7 @@ const pokemonTypes = [
   "Fairy",
 ];
 
-export default function Home() {
+export default function PokemonListPage() {
   const [pokemons, setPokemons] = useState<IPokemon[]>([]);
   const [filteredPokemons, setFilteredPokemons] = useState<IPokemon[]>([]);
   const [loading, setLoading] = useState(true);

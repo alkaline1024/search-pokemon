@@ -1,13 +1,17 @@
 declare global {
   type IPokemon = import("@/types/pokemon").IPokemon;
+  type IPokemonAttack = import("@/types/pokemon").IPokemonAttack;
+  type IPokemonDimension = import("@/types/pokemon").IPokemonDimension;
+  type IPokemonEvolutionRequirement =
+    import("@/types/pokemon").IPokemonEvolutionRequirement;
 }
 
-export interface PokemonDimension {
+export interface IPokemonDimension {
   minimum: string;
   maximum: string;
 }
 
-export interface PokemonAttack {
+export interface IPokemonAttack {
   fast: Array<{
     name: string;
     type: string;
@@ -20,7 +24,7 @@ export interface PokemonAttack {
   }>;
 }
 
-export interface PokemonEvolutionRequirement {
+export interface IPokemonEvolutionRequirement {
   amount: number;
   name: string;
 }
@@ -34,12 +38,12 @@ export interface IPokemon {
   types: string[];
   resistant: string[];
   weaknesses: string[];
-  weight: PokemonDimension;
-  height: PokemonDimension;
+  weight: IPokemonDimension;
+  height: IPokemonDimension;
   fleeRate: number;
   maxCP: number;
   maxHP: number;
-  attacks: PokemonAttack;
+  attacks: IPokemonAttack;
   evolutions?: IPokemon[];
-  evolutionRequirements?: PokemonEvolutionRequirement;
+  evolutionRequirements?: IPokemonEvolutionRequirement;
 }

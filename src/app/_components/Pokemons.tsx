@@ -2,6 +2,7 @@
 
 import { HTMLAttributes } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface PokeCardListProps {
   pokemons: IPokemon[];
@@ -36,9 +37,10 @@ export const PokeCard = ({
   onTypeClick?: (type: string) => void;
 }) => (
   <div key={pokemon.id}>
-    <div
+    <Link
       id={pokemon.id}
       className="segment flex cursor-pointer flex-col gap-4 transition-all"
+      href={`/pokemons/${pokemon.name}`}
     >
       <Image
         id={`${pokemon.id}-image`}
@@ -56,19 +58,22 @@ export const PokeCard = ({
         <div className="text-lg font-bold">{pokemon.name}</div>
         <div className="mt-1 flex flex-wrap justify-center gap-1">
           {pokemon.types.map((type) => (
-            <span
+            <div
               key={type}
               className={`type type-${type.toLowerCase()} cursor-pointer border-2 border-white transition-shadow hover:shadow-xl hover:outline-2`}
               tabIndex={0}
               role="button"
-              onClick={() => onTypeClick?.(type)}
+              onClick={(event) => {
+                event.preventDefault();
+                onTypeClick?.(type);
+              }}
             >
               {type}
-            </span>
+            </div>
           ))}
         </div>
       </div>
-    </div>
+    </Link>
   </div>
 );
 
