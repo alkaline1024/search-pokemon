@@ -82,7 +82,9 @@ body {
 }
 
 .type {
-  @apply rounded px-2 py-1 text-sm text-white;
+  @layer components {
+    @apply min-w-[70px] rounded px-2 py-1 text-center text-sm font-medium text-white;
+  }
 }
 
 .type-normal {

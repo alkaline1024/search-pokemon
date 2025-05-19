@@ -3,6 +3,7 @@
 import { HTMLAttributes } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 interface PokeCardListProps {
   pokemons: IPokemon[];
@@ -35,47 +36,50 @@ export const PokeCard = ({
 }: {
   pokemon: IPokemon;
   onTypeClick?: (type: string) => void;
-}) => (
-  <div key={pokemon.id}>
-    <Link
-      id={pokemon.id}
-      className="segment flex cursor-pointer flex-col gap-4 transition-all"
-      href={`/pokemons/${pokemon.name}`}
-    >
-      <Image
-        id={`${pokemon.id}-image`}
-        src={pokemon.image}
-        alt={pokemon.name}
-        unoptimized
-        width={128}
-        height={128}
-        loading="lazy"
-        priority={false}
-        className="mx-auto h-32 object-contain object-center"
-      />
-      <div className="text-center">
-        <div className="text-sm opacity-60">#{pokemon.number}</div>
-        <div className="text-lg font-bold">{pokemon.name}</div>
-        <div className="mt-1 flex flex-wrap justify-center gap-1">
-          {pokemon.types.map((type) => (
-            <div
-              key={type}
-              className={`type type-${type.toLowerCase()} cursor-pointer border-2 border-white transition-shadow hover:shadow-xl hover:outline-2`}
-              tabIndex={0}
-              role="button"
-              onClick={(event) => {
-                event.preventDefault();
-                onTypeClick?.(type);
-              }}
-            >
-              {type}
-            </div>
-          ))}
+}) => {
+  const t = useTranslations();
+  return (
+    <div key={pokemon.id}>
+      <Link
+        id={pokemon.id}
+        className="segment flex cursor-pointer flex-col gap-4 transition-all"
+        href={`/pokemons/${pokemon.name}`}
+      >
+        <Image
+          id={`${pokemon.id}-image`}
+          src={pokemon.image}
+          alt={pokemon.name}
+          unoptimized
+          width={128}
+          height={128}
+          loading="lazy"
+          priority={false}
+          className="mx-auto h-32 object-contain object-center"
+        />
+        <div className="text-center">
+          <div className="text-sm opacity-60">#{pokemon.number}</div>
+          <div className="text-lg font-bold">{pokemon.name}</div>
+          <div className="mt-1 flex flex-wrap justify-center gap-1">
+            {pokemon.types.map((type) => (
+              <div
+                key={type}
+                className={`type type-${type.toLowerCase()} cursor-pointer border-2 border-white transition-shadow hover:shadow-xl hover:outline-2`}
+                tabIndex={0}
+                role="button"
+                onClick={(event) => {
+                  event.preventDefault();
+                  onTypeClick?.(type);
+                }}
+              >
+                {t(type.toLowerCase())}
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-    </Link>
-  </div>
-);
+      </Link>
+    </div>
+  );
+};
 
 export const PokeCardList = ({
   pokemons,
@@ -85,13 +89,14 @@ export const PokeCardList = ({
   searching = false,
   onTypeClick,
 }: PokeCardListProps) => {
-  if (!loading && pokemons.length === 0) {
+  const t = useTranslations();
+  if (!loading && !searching && pokemons.length === 0) {
     return (
       <div className="flex h-full w-full items-center justify-center py-8">
         <div className="text-center">
-          <div className="text-2xl font-bold">Pokémon Not Found</div>
+          <div className="text-2xl font-bold">{t("pokemon-not-found")}</div>
           <div className="mt-2 text-sm text-gray-500">
-            Please try again later or check your network connection.
+            {t("try-again-later")}
           </div>
         </div>
       </div>

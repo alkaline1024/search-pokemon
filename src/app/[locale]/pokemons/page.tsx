@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { GET_POKEMONS } from "@/graphql/pokemonQueries";
 import apolloClient from "@/lib/apolloClient";
 import { PokeCardList } from "@/app/_components/Pokemons";
+import { useTranslations } from "next-intl";
 
 const pokemonTypes = [
   "Normal",
@@ -27,14 +28,17 @@ const pokemonTypes = [
 ];
 
 export default function PokemonListPage() {
+  const t = useTranslations();
   const [pokemons, setPokemons] = useState<IPokemon[]>([]);
   const [filteredPokemons, setFilteredPokemons] = useState<IPokemon[]>([]);
-  const [loading, setLoading] = useState(true);
+
   const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [searching, setSearching] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [filterType, setFilterType] = useState("");
   const hasSearchText = searchText.length > 0;
+  const hasFilter = filterType.length > 0;
 
   // Constants
   const INIT_FIRST = 20;
@@ -204,7 +208,7 @@ export default function PokemonListPage() {
           <input
             type="text"
             className={`${hasSearchText ? "pr-24" : "pl-12"} w-full rounded-full bg-white px-6 py-4 !outline-0 duration-300`}
-            placeholder="Search Pokémon..."
+            placeholder={t("search-placeholder")}
             value={searchText}
             onChange={(e) => {
               const searchInput = e.target.value;
@@ -244,17 +248,17 @@ export default function PokemonListPage() {
       </div>
       <div className="segment flex flex-col gap-4">
         <div className="border-b border-gray-200 pb-2 text-lg font-bold">
-          Types
+          {t("filter-by-type")}
         </div>
 
-        <div className="flex flex-wrap gap-4">
+        <div className="flex flex-wrap gap-2">
           {pokemonTypes.map((type) => (
             <div
               key={type}
               className={`type cursor-pointer border-1 type-${type.toLowerCase()} ${filterType == type ? "shadow-lg" : `bg-transparent text-type-${type.toLowerCase()} `}`}
               onClick={() => setFilterType(filterType === type ? "" : type)}
             >
-              {type}
+              {t(type.toLowerCase())}
             </div>
           ))}
         </div>
@@ -274,7 +278,7 @@ export default function PokemonListPage() {
             onTypeClick={(type) => setFilterType(type)}
           />
         </div>
-        {!hasSearchText && hasMore && (
+        {!hasSearchText && !hasFilter && hasMore && (
           <div>
             <PokeCardList pokemons={[]} loading={true} loadingAmount={OFFSET} />
           </div>
