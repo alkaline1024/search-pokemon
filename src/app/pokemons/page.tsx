@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { GET_POKEMONS } from "../../graphql/pokemonQueries";
-import apolloClient from "../../lib/apolloClient";
-import { PokeCardList } from "../_components/Pokemon";
+import { GET_POKEMONS } from "@/graphql/pokemonQueries";
+import apolloClient from "@/lib/apolloClient";
+import { PokeCardList } from "@/app/_components/Pokemon";
 
 const pokemonTypes = [
   "Normal",

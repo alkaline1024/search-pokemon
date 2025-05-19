@@ -2,7 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Image from "next/image";
-import ScrollToTopButton from "./_components/ScrollToTopButton";
+import ScrollToTopButton from "@/app/_components/ScrollToTopButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
