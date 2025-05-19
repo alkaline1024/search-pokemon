@@ -11,8 +11,8 @@ interface PokeCardListProps {
   searching?: boolean;
 }
 
-const PokeCardSkeleton = (
-  <div>
+const PokeCardSkeleton = (idx: number) => (
+  <div key={`loading-skeleton-${idx}`}>
     <div className="flex animate-pulse flex-col gap-4 rounded-lg border border-gray-100 bg-white p-4 shadow">
       <div className="h-32 w-full rounded bg-gray-100" />
       <div className="space-y-[6px] text-center">
@@ -52,7 +52,9 @@ export default function PokeCardList({
       className={`grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ${className}`}
     >
       {loading
-        ? Array.from({ length: loadingAmount }).map(() => PokeCardSkeleton)
+        ? Array.from({ length: loadingAmount }).map((_, idx) =>
+            PokeCardSkeleton(idx),
+          )
         : pokemons.map((pokemon) => {
             return (
               <div key={pokemon.id}>
@@ -86,7 +88,7 @@ export default function PokeCardList({
               </div>
             );
           })}
-      {searching ? PokeCardSkeleton : null}
+      {searching ? PokeCardSkeleton(0) : null}
     </div>
   );
 }
