@@ -260,6 +260,7 @@ export default function Home() {
             pokemons={filteredPokemons}
             loading={loading && filteredPokemons.length === 0}
             searching={searching}
+            onTypeClick={(type) => setFilterType(type)}
           />
         </div>
         {!hasSearchText && hasMore && (

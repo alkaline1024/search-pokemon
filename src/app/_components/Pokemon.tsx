@@ -9,6 +9,7 @@ interface PokeCardListProps {
   loading?: boolean;
   loadingAmount?: number;
   searching?: boolean;
+  onTypeClick?: (type: string) => void;
 }
 
 export const PokeCardSkeleton = (idx: number) => (
@@ -27,7 +28,13 @@ export const PokeCardSkeleton = (idx: number) => (
   </div>
 );
 
-export const PokeCard = ({ pokemon }: { pokemon: IPokemon }) => (
+export const PokeCard = ({
+  pokemon,
+  onTypeClick,
+}: {
+  pokemon: IPokemon;
+  onTypeClick?: (type: string) => void;
+}) => (
   <div key={pokemon.id}>
     <div
       id={pokemon.id}
@@ -54,6 +61,7 @@ export const PokeCard = ({ pokemon }: { pokemon: IPokemon }) => (
               className={`type type-${type.toLowerCase()} cursor-pointer border-2 border-white transition-shadow hover:shadow-xl hover:outline-2`}
               tabIndex={0}
               role="button"
+              onClick={() => onTypeClick?.(type)}
             >
               {type}
             </span>
@@ -70,6 +78,7 @@ export const PokeCardList = ({
   loading = false,
   loadingAmount = 0,
   searching = false,
+  onTypeClick,
 }: PokeCardListProps) => {
   if (!loading && pokemons.length === 0) {
     return (
@@ -93,7 +102,13 @@ export const PokeCardList = ({
             PokeCardSkeleton(idx),
           )
         : pokemons.map((pokemon) => {
-            return <PokeCard key={pokemon.id} pokemon={pokemon} />;
+            return (
+              <PokeCard
+                key={pokemon.id}
+                pokemon={pokemon}
+                onTypeClick={onTypeClick}
+              />
+            );
           })}
       {searching ? PokeCardSkeleton(0) : null}
     </div>
