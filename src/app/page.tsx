@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { GET_POKEMONS } from "./_components/pokemonQueries";
-import apolloClient from "./_components/apolloClient";
+import { GET_POKEMONS } from "../graphql/pokemonQueries";
+import apolloClient from "../lib/apolloClient";
 import PokeCardList from "./_components/PokeCardList";
 
 export default function Home() {
