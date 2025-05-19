@@ -29,7 +29,10 @@ export const PokeCardSkeleton = (idx: number) => (
 
 export const PokeCard = ({ pokemon }: { pokemon: IPokemon }) => (
   <div key={pokemon.id}>
-    <div id={pokemon.id} className="segment flex flex-col gap-4">
+    <div
+      id={pokemon.id}
+      className="segment flex cursor-pointer flex-col gap-4 transition-all"
+    >
       <Image
         id={`${pokemon.id}-image`}
         src={pokemon.image}
@@ -46,7 +49,12 @@ export const PokeCard = ({ pokemon }: { pokemon: IPokemon }) => (
         <div className="text-lg font-bold">{pokemon.name}</div>
         <div className="mt-1 flex flex-wrap justify-center gap-1">
           {pokemon.types.map((type) => (
-            <span key={type} className={`type type-${type.toLowerCase()} `}>
+            <span
+              key={type}
+              className={`type type-${type.toLowerCase()} cursor-pointer border-2 border-white transition-shadow hover:shadow-xl hover:outline-2`}
+              tabIndex={0}
+              role="button"
+            >
               {type}
             </span>
           ))}

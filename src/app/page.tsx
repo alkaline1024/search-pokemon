@@ -5,6 +5,27 @@ import { GET_POKEMONS } from "../graphql/pokemonQueries";
 import apolloClient from "../lib/apolloClient";
 import { PokeCardList } from "./_components/Pokemon";
 
+const pokemonTypes = [
+  "Normal",
+  "Fire",
+  "Water",
+  "Electric",
+  "Grass",
+  "Ice",
+  "Fighting",
+  "Poison",
+  "Ground",
+  "Flying",
+  "Psychic",
+  "Bug",
+  "Rock",
+  "Ghost",
+  "Dragon",
+  "Dark",
+  "Steel",
+  "Fairy",
+];
+
 export default function Home() {
   const [pokemons, setPokemons] = useState<IPokemon[]>([]);
   const [filteredPokemons, setFilteredPokemons] = useState<IPokemon[]>([]);
@@ -12,6 +33,7 @@ export default function Home() {
   const [hasMore, setHasMore] = useState(true);
   const [searching, setSearching] = useState(false);
   const [searchText, setSearchText] = useState("");
+  const [filterType, setFilterType] = useState("");
   const hasSearchText = searchText.length > 0;
 
   // Constants
@@ -54,18 +76,29 @@ export default function Home() {
     });
   };
 
-  // Manual search: fetch ทีละ OFFSET แล้ว filter จนกว่าจะไม่มี hasMore
+  // Manual search: fetch by OFFSET and filter until all pokemons are fetched
   const searchPokemons = async () => {
-    if (!hasSearchText || searchText === "") {
+    if (!hasSearchText && !filterType) {
+      fetchPokemons(INIT_FIRST);
       return false;
     }
 
+    const findAndSetFilteredPokemons = (target: IPokemon[]) => {
+      const filtered = target.filter((pokemon) => {
+        const matchName = hasSearchText
+          ? pokemon.name.toLowerCase().includes(searchText.toLowerCase())
+          : true;
+        const matchType = filterType
+          ? pokemon.types.includes(filterType)
+          : true;
+        return matchName && matchType;
+      });
+      setFilteredPokemons(filtered);
+    };
+
     // No need to fetch if all pokemons have already been fetched
     if (!hasMore) {
-      const filtered = pokemons.filter((p) =>
-        p.name.toLowerCase().includes(searchText.toLowerCase()),
-      );
-      setFilteredPokemons(filtered);
+      findAndSetFilteredPokemons(pokemons);
       return true;
     }
 
@@ -79,10 +112,9 @@ export default function Home() {
         fetchPolicy: "cache-first",
       });
       const newPokemons: IPokemon[] = result.data.pokemons ?? [];
-      const filteredPokemons = newPokemons.filter((p) =>
-        p.name.toLowerCase().includes(searchText.toLowerCase()),
-      );
-      setFilteredPokemons(filteredPokemons);
+      findAndSetFilteredPokemons(newPokemons);
+
+      // All pokemons have been fetched
       if (newPokemons.length < offset) {
         setPokemons(newPokemons);
         setHasMore(false);
@@ -104,7 +136,7 @@ export default function Home() {
   // Fetch on search
   useEffect(() => {
     searchPokemons();
-  }, [searchText]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [searchText, filterType]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Fetch more pokemons when
   // 1. Scroll to bottom
@@ -167,7 +199,6 @@ export default function Home() {
               const searchInput = e.target.value;
               if (!searchInput) {
                 setSearchText("");
-                fetchPokemons(INIT_FIRST);
               } else {
                 setSearchText(searchInput);
               }
@@ -180,7 +211,6 @@ export default function Home() {
               className="material-symbols-outlined cursor-pointer rounded-full p-2 hover:bg-gray-200"
               onClick={() => {
                 setSearchText("");
-                fetchPokemons(INIT_FIRST);
               }}
             >
               close
@@ -199,6 +229,23 @@ export default function Home() {
               </span>
             )}
           </div>
+        </div>
+      </div>
+      <div className="segment flex flex-col gap-4">
+        <div className="border-b border-gray-200 pb-2 text-lg font-bold">
+          Types
+        </div>
+
+        <div className="flex flex-wrap gap-4">
+          {pokemonTypes.map((type) => (
+            <div
+              key={type}
+              className={`type cursor-pointer border-1 type-${type.toLowerCase()} ${filterType == type ? "shadow-lg" : `bg-transparent text-type-${type.toLowerCase()} `}`}
+              onClick={() => setFilterType(filterType === type ? "" : type)}
+            >
+              {type}
+            </div>
+          ))}
         </div>
       </div>
       <div
