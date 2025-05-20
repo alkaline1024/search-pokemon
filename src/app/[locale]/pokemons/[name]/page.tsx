@@ -7,7 +7,7 @@ import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import apolloClient from "@/lib/apolloClient";
 import { GET_POKEMON_BY_NAME } from "@/graphql/pokemonQueries";
-import { PokeCard, PokeTypeLabel } from "@/app/_components/Pokemons";
+import { PokeCard, PokeTypeLabel } from "@/app/_components";
 
 const AttackTable = ({
   attacks,

@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { GET_POKEMONS } from "@/graphql/pokemonQueries";
 import apolloClient from "@/lib/apolloClient";
-import { PokeCardList, PokeTypeLabel } from "@/app/_components/Pokemons";
+import { PokeCardList, PokeTypeLabel } from "@/app/_components";
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -125,7 +125,7 @@ export default function PokemonListPage() {
         fetching = false;
         break;
       }
-      
+
       const result = await apolloClient.query({
         query: GET_POKEMONS,
         variables: { first: offset },
@@ -169,7 +169,7 @@ export default function PokemonListPage() {
     if (filterTypeParam) setFilterType(filterTypeParam);
     if (!searchTextParam && !filterTypeParam) fetchPokemons(INIT_FIRST);
     else router.replace("/pokemons");
-  }, []);
+  }, []); // eslint-disable-next-line react-hooks/exhaustive-deps
 
   // Fetch more pokemons when
   // 1. Scroll to bottom
@@ -270,11 +270,11 @@ export default function PokemonListPage() {
         </div>
 
         <div className="flex flex-wrap gap-2">
-          {pokemonTypes.map((type) => (
+          {pokemonTypes.map((type: string) => (
             <PokeTypeLabel
               key={type}
               type={type}
-              onClick={(type) => {
+              onClick={(type: string) => {
                 setFilterType(filterType === type ? "" : type);
               }}
               variant={filterType === type ? "solid" : "outline"}
@@ -295,7 +295,7 @@ export default function PokemonListPage() {
             pokemons={filteredPokemons}
             loading={loading && filteredPokemons.length === 0}
             searching={searching}
-            onTypeClick={(type) => setFilterType(type)}
+            onTypeClick={(type: string) => setFilterType(type)}
           />
         </div>
         {!hasSearchText && !hasFilter && hasMore && (
