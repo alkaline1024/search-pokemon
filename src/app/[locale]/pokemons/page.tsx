@@ -84,14 +84,15 @@ export default function PokemonListPage() {
     });
   };
 
+  const abortController = useRef<AbortController | null>(null);
   // Manual search: fetch by OFFSET and filter until all pokemons have been fetched
-  const searchAbortController = useRef<AbortController | null>(null);
   const searchPokemons = async () => {
-    if (searchAbortController.current) {
-      searchAbortController.current.abort();
+    if (abortController.current) {
+      console.log("Aborting previous request");
+      abortController.current.abort();
     }
-    const abortController = new AbortController();
-    searchAbortController.current = abortController;
+    const newAbortController = new AbortController();
+    abortController.current = newAbortController;
 
     if (!hasSearchText && !filterType) {
       fetchPokemons(INIT_FIRST);
@@ -120,15 +121,22 @@ export default function PokemonListPage() {
     let offset = OFFSET;
     let fetching = true;
     while (fetching) {
-      if (abortController.signal.aborted) {
+      if (newAbortController.signal.aborted) {
         fetching = false;
         break;
       }
+      
       const result = await apolloClient.query({
         query: GET_POKEMONS,
         variables: { first: offset },
         fetchPolicy: "cache-first",
       });
+
+      if (newAbortController.signal.aborted) {
+        fetching = false;
+        break;
+      }
+
       const newPokemons: IPokemon[] = result.data.pokemons ?? [];
       findAndSetFilteredPokemons(newPokemons);
 
