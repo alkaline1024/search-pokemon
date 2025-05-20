@@ -3,14 +3,13 @@ import { useTranslations } from "next-intl";
 import { PokeCard, PokeCardSkeleton } from "./PokeCard";
 
 export interface PokeCardListProps {
-  pokemons: IPokemon[];
+  pokemons: IPokemonCard[];
   className?: HTMLAttributes<HTMLDivElement>["className"];
   loading?: boolean;
   loadingAmount?: number;
   searching?: boolean;
   onTypeClick?: (type: string) => void;
 }
-
 
 export const PokeCardList = ({
   pokemons,
@@ -44,11 +43,7 @@ export const PokeCardList = ({
           )
         : pokemons.map((pokemon) => {
             return (
-              <PokeCard
-                key={pokemon.id}
-                pokemon={pokemon}
-                onTypeClick={onTypeClick}
-              />
+                <PokeCard key={pokemon.id} pokemon={pokemon} onTypeClick={onTypeClick} />
             );
           })}
       {searching ? PokeCardSkeleton(0) : null}

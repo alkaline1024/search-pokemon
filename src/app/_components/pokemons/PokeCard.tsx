@@ -4,22 +4,16 @@ import { PokeTypeLabel } from "./PokeTypeLabel";
 import { pokemonClassNames } from "@/utils/pokemonClasses";
 import { HTMLAttributes } from "react";
 
-export interface PokeCardProps {
-  pokemon: IPokemonDetail | IPokemonCard | IPokemonEvolution;
-  className?: HTMLAttributes<HTMLDivElement>["className"];
-  onTypeClick?: (type: string) => void;
-}
-
 export const PokeCardSkeleton = (idx: number) => (
   <div key={`loading-skeleton-${idx}`}>
-    <div className="flex animate-pulse flex-col gap-4 rounded-lg border border-gray-100 bg-white p-4 shadow">
-      <div className="h-32 w-full rounded bg-gray-100" />
-      <div className="space-y-[6px] text-center">
+    <div className="flex animate-pulse flex-col gap-4 rounded-lg border-4 border-white bg-white p-4 shadow">
+      <div className="h-48 w-full rounded border-2 border-white bg-gray-100" />
+      <div className="space-y-[6px] py-4 text-center">
         <div className="mx-auto h-5 w-12 rounded bg-gray-100" />
         <div className="mx-auto h-6 w-32 rounded bg-gray-200" />
         <div className="flex flex-wrap justify-center gap-1">
-          <span className="h-6 w-16 rounded bg-gray-100" />
-          <span className="h-6 w-16 rounded bg-gray-100" />
+          <span className="h-[32px] w-16 rounded bg-gray-100" />
+          <span className="h-[32px] w-16 rounded bg-gray-100" />
         </div>
       </div>
     </div>
@@ -30,7 +24,11 @@ export const PokeCard = ({
   pokemon,
   className = "",
   onTypeClick,
-}: PokeCardProps) => {
+}: {
+  pokemon: IPokemonDetail | IPokemonCard | IPokemonEvolution;
+  className?: HTMLAttributes<HTMLDivElement>["className"];
+  onTypeClick?: (type: string) => void;
+}) => {
   const pokemonTypes = pokemon.types.map((type) => type.toLowerCase());
   let fromColor = "";
   let toColor = "";
