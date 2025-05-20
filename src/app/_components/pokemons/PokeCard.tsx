@@ -66,7 +66,7 @@ export const PokeCard = ({
           height={256}
           loading="lazy"
           priority={false}
-          className="h-48 object-contain object-center p-6"
+          className="mx-auto h-48 object-contain object-center p-6"
         />
       </div>
       <div className="py-4 text-center">

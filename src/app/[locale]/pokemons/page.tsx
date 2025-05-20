@@ -35,7 +35,7 @@ export default function PokemonListPage() {
 
   const [pokemons, setPokemons] = useState<IPokemonCard[]>([]);
   const [filteredPokemons, setFilteredPokemons] = useState<IPokemonCard[]>([]);
-  
+
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(true);
   const [searching, setSearching] = useState(false);
@@ -89,12 +89,12 @@ export default function PokemonListPage() {
   // Manual search: fetch by OFFSET and filter until all pokemons have been fetched
   const searchPokemons = async () => {
     if (abortController.current) {
-      console.log("Aborting previous request");
       abortController.current.abort();
     }
     const newAbortController = new AbortController();
     abortController.current = newAbortController;
 
+    // if no searchText and no filterType, fetch pokemons
     if (!hasSearchText && !filterType) {
       fetchPokemons(INIT_FIRST);
       return false;
@@ -113,11 +113,13 @@ export default function PokemonListPage() {
       setFilteredPokemons(filtered);
     };
 
+    // All pokemons have been fetched
     if (!hasMore) {
       findAndSetFilteredPokemons(pokemons);
       return true;
     }
 
+    // Fetch pokemons by OFFSET
     setSearching(true);
     let offset = OFFSET;
     let fetching = true;
@@ -153,13 +155,14 @@ export default function PokemonListPage() {
     setSearching(false);
   };
 
-
   // Debounce searchText 300ms
   useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedSearchText(searchText);
-    }, 300); 
-
+    const handler = setTimeout(
+      () => {
+        setDebouncedSearchText(searchText);
+      },
+      searchText.length > 0 ? 300 : 0,
+    );
     return () => clearTimeout(handler);
   }, [searchText]);
 
@@ -227,7 +230,7 @@ export default function PokemonListPage() {
 
   return (
     <div className="space-y-6 py-6">
-      <div className="group w-1/2 rounded-full shadow-sm transition-shadow focus-within:!shadow-lg">
+      <div className="group w-full rounded-full shadow-sm transition-shadow focus-within:!shadow-lg sm:w-1/2">
         <div className="relative">
           <span
             className={`${hasSearchText ? "scale-0 !opacity-0" : "scale-100"} material-symbols-outlined absolute top-1/2 left-4 origin-left -translate-y-1/2 opacity-60 transition-all duration-300 group-focus-within:text-gray-800 group-focus-within:opacity-100`}
@@ -304,15 +307,15 @@ export default function PokemonListPage() {
         <div ref={containerRef}>
           <PokeCardList
             pokemons={filteredPokemons}
+            onTypeClick={(type: string) => setFilterType(type)}
             loading={loading && filteredPokemons.length === 0}
             searching={searching}
-            onTypeClick={(type: string) => setFilterType(type)}
+            searchText={searchText}
+            filterType={filterType}
           />
         </div>
-        {!hasSearchText && !hasFilter && hasMore && (
-          <div>
-            <PokeCardList pokemons={[]} loading={true} loadingAmount={OFFSET} />
-          </div>
+        {hasMore && !hasSearchText && !hasFilter && (
+          <PokeCardList pokemons={[]} loading={true} loadingAmount={OFFSET} />
         )}
       </div>
     </div>

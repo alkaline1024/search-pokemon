@@ -6,6 +6,7 @@
   "type": "ประเภท",
   "pokemon-type": "ประเภทโปเกมอน",
   "pokemon-not-found": "ไม่พบโปเกมอน",
+  "pokemon-search-not-found-description": "ไม่พบโปเกมอนที่คุณค้นหาด้วย",
   "try-again-later": "กรุณาลองอีกครั้งในภายหลังหรือเช็คการเชื่อมต่อเครือข่ายของคุณ",
   "search-placeholder": "ค้นหาโปเกมอน...",
   "filter-by-type": "กรองตามประเภท",

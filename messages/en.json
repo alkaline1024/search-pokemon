@@ -6,6 +6,7 @@
   "type": "Type",
   "pokemon-type": "Pokémon type",
   "pokemon-not-found": "Pokémon not found",
+  "pokemon-search-not-found-description": "Pokémon does not exist with search term",
   "try-again-later": "Please try again later or check your network connection.",
   "search-placeholder": "Search Pokémon...",
   "filter-by-type": "Filter by type",
