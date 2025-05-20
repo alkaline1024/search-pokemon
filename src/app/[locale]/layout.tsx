@@ -35,7 +35,7 @@ export default async function LocaleLayout({
   }
 
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body
         className={`${locale === "th" ? notoSansThai.className : loto.className} antialiased`}
       >
