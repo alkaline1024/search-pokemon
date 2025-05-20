@@ -35,12 +35,13 @@ export default function PokemonListPage() {
 
   const [pokemons, setPokemons] = useState<IPokemonCard[]>([]);
   const [filteredPokemons, setFilteredPokemons] = useState<IPokemonCard[]>([]);
-
+  
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(true);
   const [searching, setSearching] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [filterType, setFilterType] = useState("");
+  const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
   const hasSearchText = searchText.length > 0;
   const hasFilter = filterType.length > 0;
 
@@ -152,10 +153,20 @@ export default function PokemonListPage() {
     setSearching(false);
   };
 
-  // Fetch on search
+
+  // Debounce searchText 300ms
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchText(searchText);
+    }, 300); 
+
+    return () => clearTimeout(handler);
+  }, [searchText]);
+
+  // Fetch on search (
   useEffect(() => {
     searchPokemons();
-  }, [searchText, filterType]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [debouncedSearchText, filterType]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Initial fetch
   const searchTextParam = searchParams.get("search");

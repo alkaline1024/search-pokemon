@@ -54,6 +54,7 @@ export const PokeCard = ({
       key={pokemon.id}
       className={`segment flex cursor-pointer flex-col gap-4 border-4 border-white bg-gradient-to-br transition-all ${fromColor} via-transparent via-50% ${toColor} ${className}`}
       href={`/pokemons/${pokemon.name}`}
+      prefetch={true}
     >
       <div className="size-full border-2 border-gray-50 bg-white">
         <Image

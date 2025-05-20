@@ -7,13 +7,13 @@ import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import apolloClient from "@/lib/apolloClient";
 import { GET_POKEMON_BY_NAME } from "@/graphql/pokemonQueries";
-import {  PokeTypeLabel } from "@/app/_components";
+import { PokeTypeLabel } from "@/app/_components";
 import { PokeEvolutionTree } from "@/app/_components/pokemons/PokeEvolutionTree";
 
 const AttackTable = ({
   attacks,
   attackType,
-}: {s
+}: {
   attacks: IPokemonAttack["fast"] | IPokemonAttack["special"];
   attackType: "fast" | "special";
 }) => {
