@@ -45,5 +45,6 @@
   "max-hp": "HP สูงสุด",
   "weight": "น้ำหนัก",
   "attacks": "ท่าโจมตี",
-  "evolutions": "วิวัฒนาการ"
+  "evolutions": "วิวัฒนาการ",
+  "no-evolutions": "ไม่มีการวิวัฒนาการ"
 }

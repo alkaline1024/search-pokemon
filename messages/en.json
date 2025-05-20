@@ -45,5 +45,6 @@
   "max-hp": "Max HP",
   "weight": "Weight",
   "attacks": "Attacks",
-  "evolutions": "Evolutions"
+  "evolutions": "Evolutions",
+  "no-evolutions": "No evolutions"
 }

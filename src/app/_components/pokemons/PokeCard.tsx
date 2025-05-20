@@ -2,9 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { PokeTypeLabel } from "./PokeTypeLabel";
 import { pokemonClassNames } from "@/utils/pokemonClasses";
+import { HTMLAttributes } from "react";
 
 export interface PokeCardProps {
-  pokemon: IPokemon;
+  pokemon: IPokemonDetail | IPokemonCard | IPokemonEvolution;
+  className?: HTMLAttributes<HTMLDivElement>["className"];
   onTypeClick?: (type: string) => void;
 }
 
@@ -24,7 +26,11 @@ export const PokeCardSkeleton = (idx: number) => (
   </div>
 );
 
-export const PokeCard = ({ pokemon, onTypeClick }: PokeCardProps) => {
+export const PokeCard = ({
+  pokemon,
+  className = "",
+  onTypeClick,
+}: PokeCardProps) => {
   const pokemonTypes = pokemon.types.map((type) => type.toLowerCase());
   let fromColor = "";
   let toColor = "";
@@ -45,35 +51,34 @@ export const PokeCard = ({ pokemon, onTypeClick }: PokeCardProps) => {
     }
   }
   return (
-    <div key={pokemon.id}>
-      <Link
-        id={pokemon.id}
-        className={`segment flex cursor-pointer flex-col gap-4 border-4 border-white bg-gradient-to-br transition-all ${fromColor} via-transparent via-50% ${toColor}`}
-        href={`/pokemons/${pokemon.name}`}
-      >
-        <div className="size-full border-2 border-gray-50 bg-white">
-          <Image
-            id={`${pokemon.id}-image`}
-            src={pokemon.image}
-            alt={pokemon.name}
-            unoptimized
-            width={256}
-            height={256}
-            loading="lazy"
-            priority={false}
-            className="h-48 object-contain object-center py-4"
-          />
+    <Link
+      id={pokemon.id}
+      key={pokemon.id}
+      className={`segment flex cursor-pointer flex-col gap-4 border-4 border-white bg-gradient-to-br transition-all ${fromColor} via-transparent via-50% ${toColor} ${className}`}
+      href={`/pokemons/${pokemon.name}`}
+    >
+      <div className="size-full border-2 border-gray-50 bg-white">
+        <Image
+          id={`${pokemon.id}-image`}
+          src={pokemon.image}
+          alt={pokemon.name}
+          unoptimized
+          width={256}
+          height={256}
+          loading="lazy"
+          priority={false}
+          className="h-48 object-contain object-center p-6"
+        />
+      </div>
+      <div className="py-4 text-center">
+        <div className="text-sm opacity-60">#{pokemon.number}</div>
+        <div className="text-lg font-bold">{pokemon.name}</div>
+        <div className="mt-1 flex flex-wrap justify-center gap-1">
+          {pokemon.types.map((type) => (
+            <PokeTypeLabel key={type} type={type} onClick={onTypeClick} />
+          ))}
         </div>
-        <div className="py-4 text-center">
-          <div className="text-sm opacity-60">#{pokemon.number}</div>
-          <div className="text-lg font-bold">{pokemon.name}</div>
-          <div className="mt-1 flex flex-wrap justify-center gap-1">
-            {pokemon.types.map((type) => (
-              <PokeTypeLabel key={type} type={type} onClick={onTypeClick} />
-            ))}
-          </div>
-        </div>
-      </Link>
-    </div>
+      </div>
+    </Link>
   );
 };

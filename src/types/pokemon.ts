@@ -1,5 +1,7 @@
 declare global {
-  type IPokemon = import("@/types/pokemon").IPokemon;
+  type IPokemonDetail = import("@/types/pokemon").IPokemonDetail;
+  type IPokemonCard = import("@/types/pokemon").IPokemonCard;
+  type IPokemonEvolution = import("@/types/pokemon").IPokemonEvolution;
   type IPokemonAttack = import("@/types/pokemon").IPokemonAttack;
   type IPokemonDimension = import("@/types/pokemon").IPokemonDimension;
   type IPokemonEvolutionRequirement =
@@ -29,13 +31,21 @@ export interface IPokemonEvolutionRequirement {
   name: string;
 }
 
-export interface IPokemon {
+export interface IPokemonCard {
   id: string;
   number: string;
   name: string;
   image: string;
-  classification: string;
   types: string[];
+}
+
+export interface IPokemonEvolution extends IPokemonCard {
+  evolutions: IPokemonEvolution[];
+  evolutionRequirements: IPokemonEvolutionRequirement;
+}
+
+export interface IPokemonDetail extends IPokemonCard {
+  classification: string;
   resistant: string[];
   weaknesses: string[];
   weight: IPokemonDimension;
@@ -44,6 +54,6 @@ export interface IPokemon {
   maxCP: number;
   maxHP: number;
   attacks: IPokemonAttack;
-  evolutions?: IPokemon[];
-  evolutionRequirements?: IPokemonEvolutionRequirement;
+  evolutions: IPokemonEvolution[];
+  evolutionRequirements: IPokemonEvolutionRequirement;
 }

@@ -7,12 +7,13 @@ import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import apolloClient from "@/lib/apolloClient";
 import { GET_POKEMON_BY_NAME } from "@/graphql/pokemonQueries";
-import { PokeCard, PokeTypeLabel } from "@/app/_components";
+import {  PokeTypeLabel } from "@/app/_components";
+import { PokeEvolutionTree } from "@/app/_components/pokemons/PokeEvolutionTree";
 
 const AttackTable = ({
   attacks,
   attackType,
-}: {
+}: {s
   attacks: IPokemonAttack["fast"] | IPokemonAttack["special"];
   attackType: "fast" | "special";
 }) => {
@@ -53,7 +54,7 @@ const AttackTable = ({
 
 export default function PokemonDetailPage() {
   const { name } = useParams();
-  const [pokemon, setPokemon] = useState<IPokemon | null>(null);
+  const [pokemon, setPokemon] = useState<IPokemonDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const imgRef = useRef<HTMLImageElement | null>(null);
   const t = useTranslations();
@@ -206,17 +207,7 @@ export default function PokemonDetailPage() {
             <div className="text-start text-xl font-semibold">
               {t("evolutions")}
             </div>
-            <div className="flex justify-start gap-2 pt-4">
-              <PokeCard key={pokemon.id} pokemon={pokemon} />
-              {pokemon.evolutions?.map((evolution) => (
-                <div key={evolution.id} className="flex items-center">
-                  <span className="material-symbols-outlined !text-5xl">
-                    chevron_right
-                  </span>
-                  <PokeCard pokemon={evolution} />
-                </div>
-              ))}
-            </div>
+            <PokeEvolutionTree pokemon={pokemon} />
           </div>
         </div>
       )}

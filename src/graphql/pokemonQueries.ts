@@ -32,6 +32,11 @@ export const GET_POKEMON_BY_NAME = gql`
       id
       number
       name
+      image
+      evolutionRequirements {
+        amount
+        name
+      }
       weight {
         minimum
         maximum
@@ -47,7 +52,6 @@ export const GET_POKEMON_BY_NAME = gql`
       fleeRate
       maxCP
       maxHP
-      image
       attacks {
         fast {
           name
@@ -60,22 +64,27 @@ export const GET_POKEMON_BY_NAME = gql`
           damage
         }
       }
-      evolutionRequirements {
-        amount
-        name
-      }
       evolutions {
         id
         number
         name
-        classification
         types
-        resistant
-        weaknesses
-        fleeRate
-        maxCP
-        maxHP
         image
+        evolutionRequirements {
+          amount
+          name
+        }
+        evolutions {
+          id
+          number
+          name
+          types
+          image
+          evolutionRequirements {
+            amount
+            name
+          }
+        }
       }
     }
   }
