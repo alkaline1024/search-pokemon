@@ -2,13 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import apolloClient from "@/lib/apolloClient";
 import { GET_POKEMON_BY_NAME } from "@/graphql/pokemonQueries";
 import { PokeTypeLabel } from "@/app/_components";
-import { PokeEvolutionTree } from "@/app/_components/pokemons/PokeEvolutionTree";
+import { PokeEvolutionTree } from "@/app/_components/Pokemons/PokeEvolutionTree";
+import { AppButton } from "@/app/_components/AppButton";
 
 const AttackTable = ({
   attacks,
@@ -77,21 +77,7 @@ export default function PokemonDetailPage() {
 
   return (
     <div className="grid gap-4 p-4">
-      <Link
-        href="/pokemons"
-        className="mx-auto flex items-center gap-2 rounded bg-white px-4 py-2 font-semibold shadow"
-      >
-        <Image
-          src="/images/logo.png"
-          alt="Logo"
-          width={24}
-          height={24}
-          className="h-[24px] w-[24px]"
-        />
-        <p>
-          <span className="text-primary-500">Search</span> Pokémon
-        </p>
-      </Link>
+      <AppButton />
       {loading ? (
         <div className="flex h-full w-full flex-col items-center justify-center gap-4 py-16 text-lg">
           <span className="material-symbols-outlined animate-spin !text-4xl opacity-40">

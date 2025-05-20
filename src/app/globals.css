@@ -115,6 +115,14 @@
   -webkit-font-smoothing: antialiased;
 }
 
+.material-symbols-outlined.filled {
+  font-variation-settings:
+    "FILL" 1,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 24;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -139,4 +147,28 @@ body {
   @layer components {
     @apply min-w-[70px] rounded px-2 py-1 text-center text-sm font-medium text-white;
   }
+}
+
+@keyframes favorite-bounce {
+  0% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(1.25);
+  }
+  40% {
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(1.15);
+  }
+  80% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.animate-favorite-bounce {
+  animation: favorite-bounce 0.4s cubic-bezier(0.36, 1.56, 0.64, 1) both;
 }

@@ -7,7 +7,7 @@ import { Lato, Noto_Sans_Thai } from "next/font/google";
 import { routing } from "@/i18n/routing";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import ScrollToTopButton from "@/app/_components/ScrollToTopButton";
-import ChangeLanguageButton from "@/app/_components/ChangeLanguageButton";
+import { FavoritePageButton, ChangeLanguageButton } from "@/app/_components";
 
 const loto = Lato({
   weight: ["100", "300", "400", "700", "900"],
@@ -47,7 +47,9 @@ export default async function LocaleLayout({
                 <span className="text-primary-500">Search</span> Pokémon
               </h1>
             </Link>
-            <div>
+
+            <div className="flex items-center gap-4">
+              <FavoritePageButton />
               <ChangeLanguageButton />
             </div>
           </div>

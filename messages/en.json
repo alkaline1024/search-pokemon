@@ -47,5 +47,8 @@
   "weight": "Weight",
   "attacks": "Attacks",
   "evolutions": "Evolutions",
-  "no-evolutions": "No evolutions"
+  "no-evolutions": "No evolutions",
+  "no-favorites": "You don't have any favorite Pokémon yet. You can select them by clicking the heart button (❤️) on the Pokémon card.",
+  "my-favorite": "My Favorite",
+  "my-favorite-pokemon": "My Favorite Pokémon"
 }
