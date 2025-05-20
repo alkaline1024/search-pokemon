@@ -13,7 +13,7 @@ export const AttackTable = ({
     <table className="w-full table-auto text-start">
       <thead>
         <tr className="border-b border-gray-300 text-gray-800">
-          <td className="w-2/3 py-2 font-semibold">
+          <td className="py-2 font-semibold max-md:w-2/5 lg:w-1/3">
             {t("AttackTable.attack-type-with-count", {
               type: attackType,
               count: attacks.length,

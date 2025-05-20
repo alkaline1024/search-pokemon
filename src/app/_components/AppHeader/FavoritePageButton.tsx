@@ -19,7 +19,7 @@ export const FavoritePageButton = () => {
       >
         favorite
       </span>
-      {t("my-favorite")}
+      <span className="max-sm:hidden">{t("my-favorite")}</span>
     </Link>
   );
 };

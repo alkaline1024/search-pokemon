@@ -10,19 +10,28 @@ function EvolutionNode({
   showArrow?: boolean;
 }) {
   return (
-    <div className="flex items-center gap-5">
+    <div className="flex items-center max-lg:flex-col lg:gap-4">
       <PokeCard pokemon={pokemon} disabledFavorite={true} />
       {pokemon.evolutionRequirements && (
-        <div className="flex flex-col items-center gap-3">
+        <div className="flex flex-col items-center justify-center gap-3 max-lg:flex-row">
           {showArrow && (
-            <span className="material-symbols-outlined !text-7xl drop-shadow-md">
-              arrow_right_alt
-            </span>
+            <div>
+              <div className="lg:hidden">
+                <span className="material-symbols-outlined mt-6 !text-7xl drop-shadow-md">
+                  arrow_downward_alt
+                </span>
+              </div>
+              <div className="max-lg:hidden">
+                <span className="material-symbols-outlined !text-7xl drop-shadow-md">
+                  arrow_right_alt
+                </span>
+              </div>
+            </div>
           )}
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 max-lg:gap-2">
             <PokeCandy pokemon={pokemon} />
             <span className="text-sm">X</span>
-            <span className="text-lg">
+            <span className="text-lg max-lg:text-xl">
               {pokemon.evolutionRequirements.amount}
             </span>
           </div>
@@ -47,10 +56,10 @@ export const PokeEvolutionTree = ({
   const secondEvo = firstEvo.evolutions && firstEvo.evolutions[0];
 
   return (
-    <div className="flex items-center justify-start gap-5 pt-4">
+    <div className="flex items-center justify-start gap-5 max-lg:flex-col lg:pt-4">
       <EvolutionNode pokemon={pokemon} showArrow={!!firstEvo} />
       {firstEvo && (
-        <div className="flex items-center justify-center gap-5 pt-4">
+        <div className="flex items-center justify-center gap-5 max-lg:flex-col lg:pt-4">
           <EvolutionNode pokemon={firstEvo} showArrow={!!secondEvo} />
           {secondEvo && (
             <PokeCard pokemon={secondEvo} disabledFavorite={true} />

@@ -11,7 +11,6 @@ import { PokeEvolutionTree } from "@/app/_components/Pokemons/PokeEvolutionTree"
 import { AppButton } from "@/app/_components/AppButton";
 import { AttackTable } from "@/app/_components/Pokemons/AttackTable";
 
-
 const PokemonDetailSkeleton = () => {
   return (
     <div className="mx-auto flex w-full max-w-[1200px] animate-pulse flex-wrap justify-center gap-4 px-4">
@@ -104,7 +103,7 @@ export default function PokemonDetailPage() {
   }, [name]);
 
   return (
-    <div className="grid gap-4 p-4">
+    <div className="grid gap-4 p-4 max-lg:px-0">
       <AppButton />
       {loading ? (
         <PokemonDetailSkeleton />
@@ -213,7 +212,7 @@ export default function PokemonDetailPage() {
             </div>
           </div>
           <div className="segment mb-32 w-full">
-            <div className="text-start text-xl font-semibold">
+            <div className="mb-4 text-start text-xl font-semibold">
               {t("evolutions")}
             </div>
             <PokeEvolutionTree pokemon={pokemon} />

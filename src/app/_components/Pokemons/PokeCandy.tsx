@@ -30,7 +30,7 @@ export const PokeCandy = ({ pokemon }: PokeCandyProps) => {
   return (
     <div className="group relative inline-block cursor-help">
       <div
-        className={`aspect-square h-5 max-h-5 w-5 max-w-5 rounded-full border-1 border-white bg-gradient-to-r bg-blend-soft-light shadow-xl shadow-black/25 ${fromColor} ${toColor}`}
+        className={`aspect-square h-5 w-5 rounded-full border-1 border-white bg-gradient-to-r bg-blend-soft-light shadow-xl shadow-black/25 max-lg:h-6 max-lg:w-6 ${fromColor} ${toColor}`}
       />
       {tooltip && (
         <div className="text-md pointer-events-none absolute top-full left-1/2 z-10 mt-2 w-max -translate-x-1/2 scale-95 rounded bg-gray-900 px-2 py-1 text-white opacity-0 shadow-lg transition-all duration-200 group-hover:scale-100 group-hover:opacity-100">

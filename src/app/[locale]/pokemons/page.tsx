@@ -229,7 +229,7 @@ export default function PokemonListPage() {
   }, [filteredPokemons, hasMore, loading]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className="space-y-6 py-6">
+    <div className="space-y-6 px-4 py-6 max-lg:px-2">
       <div className="group w-full rounded-full shadow-sm transition-shadow focus-within:!shadow-lg sm:w-1/2">
         <div className="relative">
           <span
