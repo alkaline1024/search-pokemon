@@ -70,7 +70,7 @@ export const PokeCard = ({
       id={pokemon.id}
       key={pokemon.id}
       className={`segment group relative flex cursor-pointer flex-col gap-4 border-4 border-white bg-gradient-to-br transition-all ${fromColor} via-transparent via-50% ${toColor} ${className}`}
-      href={`/pokemons/${pokemon.name}`}
+      href={`/pokemons/${pokemon.name.replaceAll(".", "_")}`}
       prefetch={true}
     >
       {!disabledFavorite && (

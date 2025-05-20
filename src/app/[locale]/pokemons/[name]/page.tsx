@@ -90,9 +90,13 @@ export default function PokemonDetailPage() {
   useEffect(() => {
     const fetchPokemon = async () => {
       setLoading(true);
+      const decodedName = decodeURIComponent(name as string).replaceAll(
+        "_",
+        ".",
+      );
       const result = await apolloClient.query({
         query: GET_POKEMON_BY_NAME,
-        variables: { name },
+        variables: { name: decodedName },
         fetchPolicy: "cache-first",
       });
       const found = result.data.pokemon;
