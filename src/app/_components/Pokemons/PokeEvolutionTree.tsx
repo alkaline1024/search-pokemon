@@ -11,7 +11,7 @@ function EvolutionNode({
 }) {
   return (
     <div className="flex items-center gap-5">
-      <PokeCard pokemon={pokemon} />
+      <PokeCard pokemon={pokemon} disabledFavorite={true} />
       {pokemon.evolutionRequirements && (
         <div className="flex flex-col items-center gap-3">
           {showArrow && (
@@ -47,12 +47,14 @@ export const PokeEvolutionTree = ({
   const secondEvo = firstEvo.evolutions && firstEvo.evolutions[0];
 
   return (
-    <div className="flex items-center justify-center gap-5 pt-4">
+    <div className="flex items-center justify-start gap-5 pt-4">
       <EvolutionNode pokemon={pokemon} showArrow={!!firstEvo} />
       {firstEvo && (
         <div className="flex items-center justify-center gap-5 pt-4">
           <EvolutionNode pokemon={firstEvo} showArrow={!!secondEvo} />
-          {secondEvo && <PokeCard pokemon={secondEvo} />}
+          {secondEvo && (
+            <PokeCard pokemon={secondEvo} disabledFavorite={true} />
+          )}
         </div>
       )}
     </div>
