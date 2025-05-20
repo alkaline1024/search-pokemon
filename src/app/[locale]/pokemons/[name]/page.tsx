@@ -52,6 +52,74 @@ const AttackTable = ({
   );
 };
 
+const PokemonDetailSkeleton = () => {
+  return (
+    <div className="mx-auto flex w-full max-w-[1200px] animate-pulse flex-wrap justify-center gap-4 px-4">
+      <div className="w-full">
+        <div className="flex max-w-[384px] items-end justify-center gap-2">
+          <div className="h-8 w-32 rounded bg-gray-200" />
+          <div className="h-6 w-16 rounded bg-gray-200" />
+        </div>
+      </div>
+      <div className="segment w-full max-w-[384px] space-y-4">
+        <div className="h-[384px] w-full rounded-lg bg-gray-200" />
+        <div>
+          <div className="mt-2 h-6 w-32 rounded bg-gray-200" />
+          <div className="mt-2 flex flex-wrap gap-2">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="h-6 w-16 rounded bg-gray-100" />
+            ))}
+          </div>
+          <div className="mt-2 h-6 w-32 rounded bg-gray-200" />
+          <div className="mb-2 flex flex-wrap gap-1">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="h-6 w-16 rounded bg-gray-100" />
+            ))}
+          </div>
+          <div className="mt-2 h-6 w-32 rounded bg-gray-200" />
+          <div className="mb-2 flex flex-wrap gap-1">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="h-6 w-16 rounded bg-gray-100" />
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="flex grow flex-col space-y-4">
+        <div className="segment *:border-gray-200 *:not-first:pt-3 *:not-last:border-b *:not-last:pb-3">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="grid grid-cols-2 gap-2">
+              <div>
+                <div className="h-5 w-20 rounded bg-gray-200" />
+                <div className="h-5 w-24 rounded bg-gray-100" />
+              </div>
+              <div>
+                <div className="h-5 w-20 rounded bg-gray-200" />
+                <div className="h-5 w-24 rounded bg-gray-100" />
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="segment grow">
+          <div className="h-6 w-32 rounded bg-gray-200" />
+          <div className="space-y-4 pt-4">
+            {[...Array(2)].map((_, i) => (
+              <div key={i} className="h-8 w-full rounded bg-gray-100" />
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="segment mb-32 w-full">
+        <div className="h-6 w-32 rounded bg-gray-200" />
+        <div className="mt-4 flex gap-4">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="h-24 w-24 rounded bg-gray-100" />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function PokemonDetailPage() {
   const { name } = useParams();
   const [pokemon, setPokemon] = useState<IPokemonDetail | null>(null);
@@ -79,12 +147,7 @@ export default function PokemonDetailPage() {
     <div className="grid gap-4 p-4">
       <AppButton />
       {loading ? (
-        <div className="flex h-full w-full flex-col items-center justify-center gap-4 py-16 text-lg">
-          <span className="material-symbols-outlined animate-spin !text-4xl opacity-40">
-            autorenew
-          </span>
-          <span className="ml-2">{t("loading")}</span>
-        </div>
+        <PokemonDetailSkeleton />
       ) : !pokemon ? (
         <div className="flex h-full w-full items-center justify-center py-16">
           <div className="text-center">

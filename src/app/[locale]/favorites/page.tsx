@@ -4,10 +4,16 @@ import { PokeCardList } from "@/app/_components";
 import { AppButton } from "@/app/_components/AppButton";
 import { getFavorites } from "@/utils/favourite";
 import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
 
 export default function PokemonListPage() {
-  const favoritePokemons = getFavorites();
   const t = useTranslations();
+  const favoritePokemons = getFavorites();
+
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    setLoaded(true);
+  }, []);
   return (
     <div className="grid gap-4 p-4">
       <AppButton />
@@ -15,9 +21,11 @@ export default function PokemonListPage() {
         {t("my-favorite-pokemon")}
       </h1>
       {favoritePokemons.length <= 0 ? (
-        <div className="text-center opacity-60">
-          <span>{t("no-favorites")}</span>
-        </div>
+        loaded && (
+          <div className="text-center opacity-60">
+            <span>{t("no-favorites")}</span>
+          </div>
+        )
       ) : (
         <PokeCardList pokemons={favoritePokemons} />
       )}
