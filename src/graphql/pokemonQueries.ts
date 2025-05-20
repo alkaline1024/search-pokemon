@@ -7,21 +7,7 @@ export const GET_POKEMONS = gql`
       number
       name
       image
-      classification
       types
-      resistant
-      weaknesses
-      weight {
-        minimum
-        maximum
-      }
-      height {
-        minimum
-        maximum
-      }
-      fleeRate
-      maxCP
-      maxHP
     }
   }
 `;
@@ -33,6 +19,7 @@ export const GET_POKEMON_BY_NAME = gql`
       number
       name
       image
+      types
       evolutionRequirements {
         amount
         name
@@ -46,7 +33,6 @@ export const GET_POKEMON_BY_NAME = gql`
         maximum
       }
       classification
-      types
       resistant
       weaknesses
       fleeRate
@@ -68,8 +54,8 @@ export const GET_POKEMON_BY_NAME = gql`
         id
         number
         name
-        types
         image
+        types
         evolutionRequirements {
           amount
           name
@@ -78,8 +64,8 @@ export const GET_POKEMON_BY_NAME = gql`
           id
           number
           name
-          types
           image
+          types
           evolutionRequirements {
             amount
             name

@@ -33,8 +33,8 @@ export default function PokemonListPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [pokemons, setPokemons] = useState<IPokemon[]>([]);
-  const [filteredPokemons, setFilteredPokemons] = useState<IPokemon[]>([]);
+  const [pokemons, setPokemons] = useState<IPokemonCard[]>([]);
+  const [filteredPokemons, setFilteredPokemons] = useState<IPokemonCard[]>([]);
 
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(true);
@@ -66,7 +66,7 @@ export default function PokemonListPage() {
     });
     const subscription = observer.subscribe({
       next: ({ data }) => {
-        const newPokemons: IPokemon[] = data.pokemons ?? [];
+        const newPokemons: IPokemonCard[] = data.pokemons ?? [];
         if (newPokemons.length < first) {
           setPokemons(newPokemons);
           setHasMore(false);
@@ -99,7 +99,7 @@ export default function PokemonListPage() {
       return false;
     }
 
-    const findAndSetFilteredPokemons = (target: IPokemon[]) => {
+    const findAndSetFilteredPokemons = (target: IPokemonCard[]) => {
       const filtered = target.filter((pokemon) => {
         const matchName = hasSearchText
           ? pokemon.name.toLowerCase().includes(searchText.toLowerCase())
@@ -137,7 +137,7 @@ export default function PokemonListPage() {
         break;
       }
 
-      const newPokemons: IPokemon[] = result.data.pokemons ?? [];
+      const newPokemons: IPokemonCard[] = result.data.pokemons ?? [];
       findAndSetFilteredPokemons(newPokemons);
 
       // All pokemons have been fetched
