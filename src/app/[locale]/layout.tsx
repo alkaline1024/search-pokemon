@@ -10,10 +10,12 @@ import ScrollToTopButton from "@/app/_components/ScrollToTopButton";
 import { FavoritePageButton, ChangeLanguageButton } from "@/app/_components";
 
 const loto = Lato({
+  subsets: ["latin"],
   weight: ["100", "300", "400", "700", "900"],
 });
 
 const notoSansThai = Noto_Sans_Thai({
+  subsets: ["latin", "thai"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
