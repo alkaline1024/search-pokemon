@@ -44,8 +44,8 @@
   --color-type-water-500: oklch(0.7 0.19 259);
   --color-type-water-600: oklch(0.6 0.19 259);
 
-  --color-type-electric-500: oklch(0.92 0.19 102);
-  --color-type-electric-600: oklch(0.82 0.19 102);
+  --color-type-electric-500: oklch(0.85 0.19 102);
+  --color-type-electric-600: oklch(0.76 0.19 102);
 
   --color-type-grass-500: oklch(0.74 0.19 136);
   --color-type-grass-600: oklch(0.65 0.19 136);
@@ -59,8 +59,8 @@
   --color-type-poison-500: oklch(0.62 0.19 320);
   --color-type-poison-600: oklch(0.54 0.19 320);
 
-  --color-type-ground-500: oklch(0.83 0.15 90);
-  --color-type-ground-600: oklch(0.74 0.15 90);
+  --color-type-ground-500: oklch(0.76 0.14 75); /* เหลืองน้ำตาลกลางๆ */
+  --color-type-ground-600: oklch(0.66 0.14 75);
 
   --color-type-flying-500: oklch(0.83 0.15 285);
   --color-type-flying-600: oklch(0.74 0.15 285);
@@ -71,8 +71,8 @@
   --color-type-bug-500: oklch(0.74 0.19 110);
   --color-type-bug-600: oklch(0.65 0.19 110);
 
-  --color-type-rock-500: oklch(0.74 0.19 85);
-  --color-type-rock-600: oklch(0.65 0.19 85);
+  --color-type-rock-500: oklch(0.62 0.13 75);
+  --color-type-rock-600: oklch(0.52 0.13 75);
 
   --color-type-ghost-500: oklch(0.56 0.19 300);
   --color-type-ghost-600: oklch(0.48 0.19 300);
