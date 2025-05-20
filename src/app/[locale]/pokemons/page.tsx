@@ -3,9 +3,9 @@
 import { useEffect, useState, useRef } from "react";
 import { GET_POKEMONS } from "@/graphql/pokemonQueries";
 import apolloClient from "@/lib/apolloClient";
-import { PokeCardList } from "@/app/_components/Pokemons";
+import { PokeCardList, PokeTypeLabel } from "@/app/_components/Pokemons";
 import { useTranslations } from "next-intl";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const pokemonTypes = [
   "Normal",
@@ -23,7 +23,7 @@ const pokemonTypes = [
   "Rock",
   "Ghost",
   "Dragon",
-  "Dark",
+  // "Dark",
   "Steel",
   "Fairy",
 ];
@@ -150,22 +150,17 @@ export default function PokemonListPage() {
   }, [searchText, filterType]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Initial fetch
+  const searchTextParam = searchParams.get("search");
+  const filterTypeParam = searchParams.get("type");
   useEffect(() => {
     setTimeout(() => {
       window.scrollTo({ top: 0, left: 0, behavior: "instant" });
     }, 50);
 
-    const searchTextParam = searchParams.get("search");
-    const filterTypeParam = searchParams.get("type");
-    if (searchTextParam) {
-      setSearchText(searchTextParam);
-    }
-    if (filterTypeParam) {
-      setFilterType(filterTypeParam);
-    }
-    if (!searchTextParam && !filterTypeParam) {
-      fetchPokemons(INIT_FIRST);
-    }
+    if (searchTextParam) setSearchText(searchTextParam);
+    if (filterTypeParam) setFilterType(filterTypeParam);
+    if (!searchTextParam && !filterTypeParam) fetchPokemons(INIT_FIRST);
+    else router.replace("/pokemons");
   }, []);
 
   // Fetch more pokemons when
@@ -268,13 +263,15 @@ export default function PokemonListPage() {
 
         <div className="flex flex-wrap gap-2">
           {pokemonTypes.map((type) => (
-            <div
+            <PokeTypeLabel
               key={type}
-              className={`type cursor-pointer border-1 type-${type.toLowerCase()} ${filterType == type ? "shadow-lg" : `bg-transparent text-type-${type.toLowerCase()} `}`}
-              onClick={() => setFilterType(filterType === type ? "" : type)}
-            >
-              {t(type.toLowerCase())}
-            </div>
+              type={type}
+              onClick={(type) => {
+                setFilterType(filterType === type ? "" : type);
+              }}
+              variant={filterType === type ? "solid" : "outline"}
+              disabledHover={true}
+            />
           ))}
         </div>
       </div>

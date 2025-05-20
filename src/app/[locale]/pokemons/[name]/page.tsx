@@ -7,7 +7,7 @@ import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import apolloClient from "@/lib/apolloClient";
 import { GET_POKEMON_BY_NAME } from "@/graphql/pokemonQueries";
-import { PokeTypeLabel } from "@/app/_components/Pokemons";
+import { PokeCard, PokeTypeLabel } from "@/app/_components/Pokemons";
 
 const AttackTable = ({
   attacks,
@@ -21,7 +21,7 @@ const AttackTable = ({
     <table className="w-full table-auto text-start">
       <thead>
         <tr className="border-b border-gray-300 text-gray-800">
-          <td className="w-1/2 py-2 font-semibold">
+          <td className="w-2/3 py-2 font-semibold">
             {t("AttackTable.attack-type-with-count", {
               type: attackType,
               count: attacks.length,
@@ -36,8 +36,11 @@ const AttackTable = ({
           <tr key={attack.name}>
             <td>{attack.name}</td>
             <td>
-              <div className="mx-1 my-1">
-                <PokeTypeLabel className="w-fit" type={attack.type} />
+              <div className="flex">
+                <PokeTypeLabel
+                  className="mx-[2px] my-[2px]"
+                  type={attack.type}
+                />
               </div>
             </td>
             <td>{attack.damage}</td>
@@ -199,7 +202,22 @@ export default function PokemonDetailPage() {
               </div>
             </div>
           </div>
-          <div className="segment w-full">{t("evolutions")}</div>
+          <div className="segment mb-32 w-full">
+            <div className="text-start text-xl font-semibold">
+              {t("evolutions")}
+            </div>
+            <div className="flex justify-start gap-2 pt-4">
+              <PokeCard key={pokemon.id} pokemon={pokemon} />
+              {pokemon.evolutions?.map((evolution) => (
+                <div key={evolution.id} className="flex items-center">
+                  <span className="material-symbols-outlined !text-5xl">
+                    chevron_right
+                  </span>
+                  <PokeCard pokemon={evolution} />
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       )}
     </div>
