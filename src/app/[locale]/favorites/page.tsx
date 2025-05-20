@@ -15,7 +15,7 @@ export default function PokemonListPage() {
     setLoaded(true);
   }, []);
   return (
-    <div className="grid gap-4 p-4">
+    <div className="grid gap-4 p-4 max-lg:px-2">
       <AppButton />
       <h1 className="pt-4 text-center text-2xl font-bold">
         {t("my-favorite-pokemon")}
